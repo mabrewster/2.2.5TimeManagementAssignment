@@ -4,7 +4,182 @@
   <title>My GitHub Page</title>
 </head>
 <body>
-  <h1>Hello, GitHub Pages is working!</h1>
+  <h1><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eisenhower Matrix Activity</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        header {
+            background-color: #ffeb3b;
+            padding: 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+        .tasks {
+            width: 25%;
+            padding: 10px;
+        }
+        .task {
+            background-color: #2196f3;
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 20px;
+            cursor: grab;
+            text-align: center;
+        }
+        .matrix {
+            width: 75%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 10px;
+            padding: 10px;
+        }
+        .quadrant {
+            background-color: white;
+            border: 2px solid #ccc;
+            min-height: 200px;
+            padding: 10px;
+        }
+        .quadrant h2 {
+            margin-top: 0;
+            font-size: 16px;
+            padding: 5px;
+            color: white;
+        }
+        .urgent-important h2 { background-color: #f44336; }
+        .important-not-urgent h2 { background-color: #ff9800; }
+        .not-important-urgent h2 { background-color: #2196f3; }
+        .not-important-not-urgent h2 { background-color: #9c27b0; }
+        .note {
+            text-align: center;
+            margin: 20px;
+            font-style: italic;
+        }
+        .screenshot-button {
+            display: block;
+            margin: 0 auto 30px auto;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Modal styles */
+        #screenshot-popup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.3);
+        }
+        #screenshot-popup-content {
+            background: white;
+            max-width: 350px;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 16px rgba(0,0,0,0.2);
+            text-align: left;
+        }
+        #screenshot-popup-content h3 {
+            margin-top: 0;
+        }
+        #close-popup-btn {
+            margin-top: 10px;
+            padding: 5px 15px;
+            background: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Sort each task into the correct quadrant. When finished, take a screenshot and submit it.
+    </header>
+    <div class="container">
+        <div class="tasks">
+            <div class="task" draggable="true" ondragstart="drag(event)" id="task1">Study for test</div>
+            <div class="task" draggable="true" ondragstart="drag(event)" id="task2">Clean your room</div>
+            <div class="task" draggable="true" ondragstart="drag(event)" id="task3">Check social media</div>
+            <div class="task" draggable="true" ondragstart="drag(event)" id="task4">Finish homework</div>
+            <div class="task" draggable="true" ondragstart="drag(event)" id="task5">Organize backpack</div>
+            <div class="task" draggable="true" ondragstart="drag(event)" id="task6">Play video games</div>
+            <div class="task" draggable="true" ondragstart="drag(event)" id="task7">Feed the pet</div>
+            <div class="task" draggable="true" ondragstart="drag(event)" id="task8">Plan project</div>
+        </div>
+        <div class="matrix">
+            <div class="quadrant urgent-important" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h2>Urgent & Important</h2>
+            </div>
+            <div class="quadrant important-not-urgent" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h2>Important but Not Urgent</h2>
+            </div>
+            <div class="quadrant not-important-urgent" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h2>Urgent but Not Important</h2>
+            </div>
+            <div class="quadrant not-important-not-urgent" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h2>Not Urgent & Not Important</h2>
+            </div>
+        </div>
+    </div>
+    <div class="note">
+        There are no right or wrong answers. This is your personal assessment.
+    </div>
+    <!-- Screenshot Button and Modal -->
+    <button class="screenshot-button" onclick="showScreenshotPopup()">How to Take a Screenshot</button>
+    <div id="screenshot-popup">
+      <div id="screenshot-popup-content">
+        <h3>How to Take a Screenshot (Windows)</h3>
+        <ol>
+          <li>Press <b>Windows key + Shift + S</b> to open the Snipping Tool.</li>
+          <li>Select the area of the screen you want to capture.</li>
+          <li>The screenshot is copied to your clipboard.</li>
+          <li>Paste (<b>Ctrl + V</b>) into a document, email, or assignment.</li>
+          <li>Alternatively, press <b>PrtScn</b> to capture the full screen and paste it.</li>
+        </ol>
+        <button id="close-popup-btn" onclick="closeScreenshotPopup()">Close</button>
+      </div>
+    </div>
+
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            var task = document.getElementById(data);
+            ev.target.appendChild(task);
+        }
+        function showScreenshotPopup() {
+            document.getElementById('screenshot-popup').style.display = 'block';
+        }
+        function closeScreenshotPopup() {
+            document.getElementById('screenshot-popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html></h1>
 </body>
 </html>
 Add index.html for GitHub Pages
